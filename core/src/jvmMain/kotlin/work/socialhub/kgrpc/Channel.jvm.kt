@@ -1,6 +1,7 @@
 package work.socialhub.kgrpc
 
 import work.socialhub.kgrpc.config.KeepAliveConfig
+import work.socialhub.kgrpc.internal.ClientInterceptorImpl
 import io.grpc.ManagedChannel
 import io.grpc.okhttp.OkHttpChannelBuilder
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -26,7 +27,8 @@ actual class Channel private constructor(val channel: ManagedChannel) {
         }
 
         actual fun withInterceptors(vararg interceptors: CallInterceptor): Builder = apply {
-            // TODO: wrap CallInterceptor to io.grpc.ClientInterceptor
+            val grpcInterceptors = interceptors.map { ClientInterceptorImpl(it) }.toTypedArray()
+            impl.intercept(*grpcInterceptors)
         }
 
         actual fun withKeepAliveConfig(config: KeepAliveConfig): Builder = apply {
