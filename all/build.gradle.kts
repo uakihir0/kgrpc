@@ -5,6 +5,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.cocoapods)
+    alias(libs.plugins.swiftpackage)
     id("module.publications")
 }
 
@@ -55,6 +56,14 @@ kotlin {
         commonMain.dependencies {
             api(project(":core"))
         }
+    }
+}
+
+multiplatformSwiftPackage {
+    swiftToolsVersion("5.7")
+    targetPlatforms {
+        iOS { v("15") }
+        macOS { v("12.0") }
     }
 }
 
