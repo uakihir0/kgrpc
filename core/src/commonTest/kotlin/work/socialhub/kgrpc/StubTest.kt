@@ -2,7 +2,10 @@ package work.socialhub.kgrpc
 
 import work.socialhub.kgrpc.stub.Stub
 import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -20,8 +23,8 @@ class StubTest {
         val withDeadline = stub.withDeadlineAfter(5.seconds)
 
         assertNotNull(withDeadline)
-        assert(withDeadline !== stub)
-        assert(withDeadline.deadline == 5.seconds)
+        assertNotEquals(stub, withDeadline)
+        assertEquals(5.seconds, withDeadline.deadline)
     }
 
     @Test
@@ -29,6 +32,6 @@ class StubTest {
         val stub = TestStub()
         stub.withDeadlineAfter(10.seconds)
 
-        assert(stub.deadline == null)
+        assertNull(stub.deadline)
     }
 }

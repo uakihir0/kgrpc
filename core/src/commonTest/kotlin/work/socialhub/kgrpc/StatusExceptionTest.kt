@@ -3,6 +3,7 @@ package work.socialhub.kgrpc
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
 
 class StatusExceptionTest {
@@ -37,7 +38,7 @@ class StatusExceptionTest {
         val duration = 5.seconds
         val ex = StatusException.requestTimeout(duration, null)
         assertEquals(Code.DEADLINE_EXCEEDED, ex.status.code)
-        assert(ex.status.statusMessage.contains("5s"))
+        assertTrue(ex.status.statusMessage.contains("5s"))
     }
 
     @Test
