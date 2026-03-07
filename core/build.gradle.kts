@@ -1,5 +1,6 @@
 import org.gradle.api.tasks.compile.JavaCompile
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.konan.target.HostManager
 
 plugins {
@@ -40,8 +41,28 @@ kotlin {
     linuxX64()
     mingwX64()
 
+    targets.filterIsInstance<KotlinNativeTarget>().forEach {
+        it.compilations.getByName("main") {
+            cinterops {
+                create("kgrpc_native") {
+                    definitionFile = layout.projectDirectory.file("src/nativeInterop/cinterop/kgrpc_native.def")
+                }
+            }
+        }
+    }
+
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+
+    targets.filterIsInstance<KotlinNativeTarget>().forEach {
+        it.compilations.all {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    freeCompilerArgs.add("-opt-in=kotlinx.cinterop.ExperimentalForeignApi")
+                }
+            }
+        }
     }
 
     sourceSets {
