@@ -1,0 +1,15 @@
+.gradle/
+.gradle-home/
+build/
+.idea/
+*.iml
+local.properties
+secrets.json
+jwt.json
+oauth.json
+
+# Rust
+native/target/
+
+# Reference repo (cloned for development)
+_grpc-kotlin-multiplatform-ref/
