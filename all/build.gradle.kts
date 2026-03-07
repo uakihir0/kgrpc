@@ -73,6 +73,15 @@ tasks.configureEach {
     }
 }
 
+tasks.podPublishXCFramework {
+    doLast {
+        providers.exec {
+            executable = "sh"
+            args = listOf(project.projectDir.path + "/../tool/rename_podfile.sh")
+        }.standardOutput.asText.get()
+    }
+}
+
 tasks.withType<JavaCompile>().configureEach {
     options.release.set(11)
 }
