@@ -39,7 +39,7 @@ jobs:
       - name: Create SwiftPackage
         uses: gradle/actions/setup-gradle@v3
         with:
-          arguments: all:createSwiftPackage -x check
+          arguments: all:createSwiftPackage -x check --info
 
       - name: Set Project Version
         run: |
