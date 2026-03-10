@@ -15,6 +15,27 @@ jobs:
           java-version: "17"
           distribution: "temurin"
 
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin,x86_64-apple-darwin,aarch64-apple-ios,aarch64-apple-ios-sim,x86_64-apple-ios
+
+      - name: Cache Rust build
+        uses: actions/cache@v4
+        with:
+          path: |
+            native/target
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: rust-apple-all-${{ hashFiles('native/Cargo.lock') }}
+          restore-keys: |
+            rust-apple-all-
+
+      - name: Build Rust native libraries
+        run: |
+          cd native
+          bash compile.sh aarch64-apple-darwin x86_64-apple-darwin aarch64-apple-ios aarch64-apple-ios-sim x86_64-apple-ios
+
       - name: Create SwiftPackage
         uses: gradle/actions/setup-gradle@v3
         with:
