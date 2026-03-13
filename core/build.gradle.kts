@@ -30,16 +30,26 @@ kotlin {
         }
     }
 
-    if (HostManager.hostIsMac) {
-        iosX64()
-        iosArm64()
-        iosSimulatorArm64()
-        macosX64()
-        macosArm64()
+    // kgrpc.targets: "apple" | "linux" | "windows" | "all" (default)
+    val targetGroup = findProperty("kgrpc.targets")?.toString() ?: "all"
+
+    if (targetGroup == "apple" || targetGroup == "all") {
+        if (HostManager.hostIsMac) {
+            iosX64()
+            iosArm64()
+            iosSimulatorArm64()
+            macosX64()
+            macosArm64()
+        }
     }
 
-    linuxX64()
-    mingwX64()
+    if (targetGroup == "linux" || targetGroup == "all") {
+        linuxX64()
+    }
+
+    if (targetGroup == "windows" || targetGroup == "all") {
+        mingwX64()
+    }
 
     targets.filterIsInstance<KotlinNativeTarget>().forEach {
         it.compilations.getByName("main") {
@@ -53,16 +63,7 @@ kotlin {
 
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
-    }
-
-    targets.filterIsInstance<KotlinNativeTarget>().forEach {
-        it.compilations.all {
-            compileTaskProvider.configure {
-                compilerOptions {
-                    freeCompilerArgs.add("-opt-in=kotlinx.cinterop.ExperimentalForeignApi")
-                }
-            }
-        }
+        freeCompilerArgs.add("-opt-in=kotlinx.cinterop.ExperimentalForeignApi")
     }
 
     sourceSets {
