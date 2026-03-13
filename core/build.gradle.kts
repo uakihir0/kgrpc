@@ -30,16 +30,26 @@ kotlin {
         }
     }
 
-    if (HostManager.hostIsMac) {
-        iosX64()
-        iosArm64()
-        iosSimulatorArm64()
-        macosX64()
-        macosArm64()
+    // kgrpc.targets: "apple" | "others" | "all" (default)
+    //  - apple:  iOS, macOS (macOS host only)
+    //  - others: Linux, Windows
+    //  - all:    all native targets (macOS host only)
+    val targetGroup = findProperty("kgrpc.targets")?.toString() ?: "all"
+
+    if (targetGroup == "apple" || targetGroup == "all") {
+        if (HostManager.hostIsMac) {
+            iosX64()
+            iosArm64()
+            iosSimulatorArm64()
+            macosX64()
+            macosArm64()
+        }
     }
 
-    linuxX64()
-    mingwX64()
+    if (targetGroup == "others" || targetGroup == "all") {
+        linuxX64()
+        mingwX64()
+    }
 
     targets.filterIsInstance<KotlinNativeTarget>().forEach {
         it.compilations.getByName("main") {

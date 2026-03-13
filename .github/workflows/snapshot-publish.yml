@@ -25,6 +25,9 @@ jobs:
         with:
           targets: aarch64-apple-darwin,x86_64-apple-darwin,aarch64-apple-ios,aarch64-apple-ios-sim,x86_64-apple-ios
 
+      - name: Install cross (for Linux/Windows cross-compilation)
+        run: cargo install cross --git https://github.com/cross-rs/cross
+
       - name: Cache Rust build
         uses: actions/cache@v4
         with:
@@ -32,32 +35,27 @@ jobs:
             native/target
             ~/.cargo/registry
             ~/.cargo/git
-          key: rust-apple-all-${{ hashFiles('native/Cargo.lock') }}
+          key: rust-all-${{ hashFiles('native/Cargo.lock') }}
           restore-keys: |
-            rust-apple-all-
+            rust-all-
 
-      - name: Build Rust native libraries
+      - name: Build Rust native libraries (all targets)
         run: |
           cd native
-          bash compile.sh aarch64-apple-darwin x86_64-apple-darwin aarch64-apple-ios aarch64-apple-ios-sim x86_64-apple-ios
+          bash compile.sh \
+            aarch64-apple-darwin x86_64-apple-darwin \
+            aarch64-apple-ios aarch64-apple-ios-sim x86_64-apple-ios \
+            x86_64-unknown-linux-gnu x86_64-pc-windows-gnu
 
       - name: Build with Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
-          arguments: >
-            build
-            -x check
-            -x cinteropKgrpc_nativeLinuxX64
-            -x cinteropKgrpc_nativeMingwX64
+          arguments: build -x check
 
       - name: Publish to Repsy
         uses: gradle/actions/setup-gradle@v3
         with:
-          arguments: >
-            publishAllPublicationsToMavenRepository
-            -x check
-            -x cinteropKgrpc_nativeLinuxX64
-            -x cinteropKgrpc_nativeMingwX64
+          arguments: publishAllPublicationsToMavenRepository -x check
         env:
           USERNAME: ${{ secrets.REPSY_USERNAME }}
           PASSWORD: ${{ secrets.REPSY_PASSWORD }}

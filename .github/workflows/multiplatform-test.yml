@@ -42,12 +42,15 @@ jobs:
           - os: macos-latest
             rust-target: aarch64-apple-darwin
             gradle-target: macosArm64Test
+            target-group: apple
           - os: ubuntu-latest
             rust-target: x86_64-unknown-linux-gnu
             gradle-target: linuxX64Test
+            target-group: others
           - os: windows-latest
             rust-target: x86_64-pc-windows-gnu
             gradle-target: mingwX64Test
+            target-group: others
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -87,7 +90,7 @@ jobs:
       - name: Run Native tests
         shell: bash
         run: |
-          ./gradlew core:${{ matrix.gradle-target }}
+          ./gradlew core:${{ matrix.gradle-target }} -Pkgrpc.targets=${{ matrix.target-group }}
 
       - name: Upload test results
         if: always()
