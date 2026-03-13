@@ -46,11 +46,11 @@ jobs:
           - os: ubuntu-latest
             rust-target: x86_64-unknown-linux-gnu
             gradle-target: linuxX64Test
-            target-group: others
+            target-group: linux
           - os: windows-latest
             rust-target: x86_64-pc-windows-gnu
             gradle-target: mingwX64Test
-            target-group: others
+            target-group: windows
     runs-on: ${{ matrix.os }}
 
     steps:

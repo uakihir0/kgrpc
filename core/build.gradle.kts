@@ -30,10 +30,7 @@ kotlin {
         }
     }
 
-    // kgrpc.targets: "apple" | "others" | "all" (default)
-    //  - apple:  iOS, macOS (macOS host only)
-    //  - others: Linux, Windows
-    //  - all:    all native targets (macOS host only)
+    // kgrpc.targets: "apple" | "linux" | "windows" | "all" (default)
     val targetGroup = findProperty("kgrpc.targets")?.toString() ?: "all"
 
     if (targetGroup == "apple" || targetGroup == "all") {
@@ -46,8 +43,11 @@ kotlin {
         }
     }
 
-    if (targetGroup == "others" || targetGroup == "all") {
+    if (targetGroup == "linux" || targetGroup == "all") {
         linuxX64()
+    }
+
+    if (targetGroup == "windows" || targetGroup == "all") {
         mingwX64()
     }
 
