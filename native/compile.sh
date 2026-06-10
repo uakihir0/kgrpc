@@ -7,7 +7,6 @@ set -e
 #
 # Supported targets:
 #   aarch64-apple-darwin     (macOS ARM)
-#   x86_64-apple-darwin      (macOS Intel)
 #   aarch64-apple-ios        (iOS ARM)
 #   aarch64-apple-ios-sim    (iOS Simulator ARM)
 #   x86_64-apple-ios         (iOS Simulator Intel)
@@ -25,7 +24,6 @@ cd "$SCRIPT_DIR"
 # Apple targets can be built directly with cargo
 APPLE_TARGETS=(
     "aarch64-apple-darwin"
-    "x86_64-apple-darwin"
     "aarch64-apple-ios"
     "aarch64-apple-ios-sim"
     "x86_64-apple-ios"

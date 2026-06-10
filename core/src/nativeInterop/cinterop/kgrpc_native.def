@@ -7,7 +7,6 @@ staticLibraries = libkgrpc_native.a
 libraryPaths.ios_arm64 = ../native/target/aarch64-apple-ios/release
 libraryPaths.ios_simulator_arm64 = ../native/target/aarch64-apple-ios-sim/release
 libraryPaths.macos_arm64 = ../native/target/aarch64-apple-darwin/release
-libraryPaths.macos_x64 = ../native/target/x86_64-apple-darwin/release
 libraryPaths.ios_x64 = ../native/target/x86_64-apple-ios/release
 
 # linux
