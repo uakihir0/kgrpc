@@ -4,7 +4,9 @@ dokka = "2.2.0"
 maven-publish = "0.36.0"
 coroutines = "1.11.0"
 grpc-java = "1.82.0"
-grpc-kotlin = "1.5.0"
+# grpc-kotlin 1.5.0 is built for JVM 17 (org.gradle.jvm.version=17) and cannot be
+# consumed by this project's JVM 11 target. Keep 1.4.3 until the JVM target is raised.
+grpc-kotlin = "1.4.3"
 ktor = "3.5.0"
 okio = "3.17.0"
 kotlinx-io = "0.9.0"
