@@ -6,5 +6,11 @@ updates:
       dependencies:
         patterns:
           - "*"
+    # grpc-kotlin 1.5.0+ is built for JVM 17 (org.gradle.jvm.version=17) while this
+    # project targets JVM 11, so newer releases cannot be consumed.
+    ignore:
+      - dependency-name: "io.grpc:grpc-kotlin-stub"
+        versions:
+          - ">= 1.5.0"
     schedule:
       interval: "weekly"

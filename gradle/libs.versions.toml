@@ -1,13 +1,13 @@
 [versions]
-kotlin = "2.4.0"
-dokka = "2.2.0"
-maven-publish = "0.36.0"
+kotlin = "2.4.21"
+dokka = "2.3.0"
+maven-publish = "0.37.0"
 coroutines = "1.11.0"
 grpc-java = "1.82.0"
 # grpc-kotlin 1.5.0 is built for JVM 17 (org.gradle.jvm.version=17) and cannot be
 # consumed by this project's JVM 11 target. Keep 1.4.3 until the JVM target is raised.
 grpc-kotlin = "1.4.3"
-ktor = "3.5.0"
+ktor = "3.6.1"
 okio = "3.17.0"
 kotlinx-io = "0.9.0"
 
@@ -25,7 +25,7 @@ ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 nexus-publish = "io.github.gradle-nexus.publish-plugin:io.github.gradle-nexus.publish-plugin.gradle.plugin:2.0.0"
 maven-publish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "maven-publish" }
 dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
-slf4j-simple = "org.slf4j:slf4j-simple:2.0.18"
+slf4j-simple = "org.slf4j:slf4j-simple:2.0.20"
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
@@ -33,4 +33,4 @@ kotlin-cocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref =
 maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 swiftpackage = "io.github.luca992.multiplatform-swiftpackage:2.3.0"
-git-versioning = "me.qoomon.git-versioning:6.4.4"
+git-versioning = "me.qoomon.git-versioning:7.0.0"
