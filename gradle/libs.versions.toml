@@ -9,7 +9,7 @@ grpc-java = "1.85.1"
 grpc-kotlin = "1.4.3"
 ktor = "3.6.1"
 okio = "3.18.2"
-kotlinx-io = "0.9.2"
+kotlinx-io = "0.9.3"
 
 [libraries]
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
